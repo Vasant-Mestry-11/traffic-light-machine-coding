@@ -1,26 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 const trafficLight = [
   {
     color: "red",
     backgroundClass: "background-red",
-    wait: 3000,
+    wait: 5000,
   },
   {
     color: "yellow",
     backgroundClass: "background-yellow",
-    wait: 1000,
+    wait: 2000,
   },
   {
     color: "green",
     backgroundClass: "background-green",
-    wait: 1000,
+    wait: 3000,
   },
 ];
 
 function App() {
   const [activeLight, setActiveLight] = useState("red");
+  const currentLight = trafficLight.find(
+    (light) => light.color === activeLight
+  );
+  const currentLightIndex = trafficLight.findIndex(
+    (light) => light.color === activeLight
+  );
+
+  useEffect(() => {
+    const idx = (currentLightIndex + 1) % trafficLight.length;
+    const timer = setTimeout(() => {
+      setActiveLight(trafficLight[idx].color);
+    }, currentLight?.wait);
+
+    return () => clearTimeout(timer);
+  }, [activeLight, currentLightIndex, currentLight]);
 
   return (
     <div className="App">
