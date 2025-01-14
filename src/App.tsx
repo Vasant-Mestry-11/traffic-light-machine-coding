@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import TrafficLight from "./components/TrafficLight";
 
 const trafficLight = [
   {
     color: "red",
     backgroundClass: "background-red",
-    wait: 5000,
+    wait: 4000,
   },
   {
     color: "yellow",
@@ -43,14 +44,11 @@ function App() {
       <div className="trafficLightContainer">
         {trafficLight.map((light, index) => {
           return (
-            <div
+            <TrafficLight
+              isActive={light.color === activeLight}
               key={index}
-              className={`trafficLight ${
-                activeLight === light.color
-                  ? light.backgroundClass
-                  : "background-gray"
-              }`}
-            ></div>
+              bgClass={currentLight?.backgroundClass}
+            />
           );
         })}
       </div>
